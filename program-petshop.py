@@ -441,7 +441,10 @@ def tambahItem():
                 harga_input = input("Masukkan harga: ")
                 if harga_input.isdigit():
                     harga = int(harga_input)
-                    break
+                    if harga > 0:
+                        break
+                    else:
+                        print("Harga tidak boleh kosong atau 0.")
                 else:
                     print("Harga harus berupa angka.")
 
@@ -449,7 +452,10 @@ def tambahItem():
                 diskon_input = input("Masukkan diskon: ")
                 if diskon_input.isdigit():
                     diskon = int(diskon_input)
-                    break
+                    if diskon <= 50:
+                        break
+                    else:
+                        print("Diskon maksimal 50%.")
                 else:
                     print("Diskon harus berupa angka.")
 
@@ -457,7 +463,10 @@ def tambahItem():
                 stok_input = input("Masukkan stok: ")
                 if stok_input.isdigit():
                     stok = int(stok_input)
-                    break
+                    if stok > 0:
+                        break
+                    else:
+                        print("Stok tidak boleh kosong atau 0.")
                 else:
                     print("Stok harus berupa angka.")
 
@@ -529,21 +538,32 @@ def editItem():
                     harga_input_baru = input("Masukkan harga: ")
                     if harga_input_baru.isdigit():
                         harga_baru = int(harga_input_baru)
-                        break
+                        if harga_baru > 0:
+                            break
+                        else:
+                            print("Harga tidak boleh kosong atau 0.")
                     else:
                         print("Harga harus berupa angka.")
+
                 while True:
                     diskon_input_baru = input("Masukkan diskon: ")
                     if diskon_input_baru.isdigit():
                         diskon_baru = int(diskon_input_baru)
-                        break
+                        if diskon_baru <= 50:
+                            break
+                        else:
+                            print("Diskon maksimal 50%.")
                     else:
                         print("Diskon harus berupa angka.")
+
                 while True:
-                    stok_input_baru = input("Masukkan jumlah stok: ")
+                    stok_input_baru = input("Masukkan stok: ")
                     if stok_input_baru.isdigit():
                         stok_baru = int(stok_input_baru)
-                        break
+                        if stok_baru > 0:
+                            break
+                        else:
+                            print("Stok tidak boleh kosong atau 0.")
                     else:
                         print("Stok harus berupa angka.")
 
