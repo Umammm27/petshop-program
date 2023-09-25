@@ -13,7 +13,7 @@ data_barang = {
 
 nama_barang_terpilih = ""
 jumlah_stok_terpilih = 0
-kategori_terpilih = ""
+kategori_tepilih = ""
 
 
 
@@ -22,7 +22,7 @@ def hitungDiskon(harga, diskon):
 
 
 def pelanggan():
-    global nama_barang_terpilih, jumlah_stok_terpilih  
+    global nama_barang_terpilih, jumlah_stok_terpilih
 
     while True:
         print("\nSelamat Datang di Petshop Umam :")
@@ -79,13 +79,13 @@ def menuTampil():
       print("\nPilihan tidak valid. Silakan pilih opsi yang benar.")
 
 def tampilSemua():
-    global nama_barang_terpilih, jumlah_stok_terpilih  
+    global nama_barang_terpilih, jumlah_stok_terpilih
 
     while True:
         print("\nDaftar Barang di Petshop:")
         header = "{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<10}".format("ID", "Nama Barang", "Kategori Hewan", "Merk", "Harga", "Diskon", "Stok")
         print("\n" + header)
-        print("-" * len(header)) 
+        print("-" * len(header))
 
         for id_barang, barang in data_barang.items():
             row = "{:<10} {:<15} {:<15} {:<15} Rp.{:<12} {:<15} {:<10}".format(id_barang, barang["namaBarang"], barang["kategoriHewan"], barang["merk"], barang["harga"], str(barang["diskon"])+'%', barang["stok"])
@@ -97,7 +97,7 @@ def tampilSemua():
 
         if pilihan == "y":
             beli = input('\nMasukkan Nama Barang : ')
-            id_barang_terpilih = None 
+            id_barang_terpilih = None
 
             for id_barang, barang in data_barang.items():
                 if barang["namaBarang"] == beli:
@@ -117,14 +117,15 @@ def tampilSemua():
                             print(f"\nAnda telah memilih {nama_barang_terpilih} ({jumlah_stok_terpilih} pcs).")
                             print('\nTerimakasih telah berbelanja di toko kami!')
                             time.sleep(0.5)
-                            break
+                            
+                            checkout()
+                            return
                     except ValueError:
                         print("\nMohon Maaf. Masukkan jumlah stok dalam angka.")
-                checkout()
-                break
             else:
                 print(f"\nMohon Maaf. Nama barang '{beli}' tidak ditemukan.")
 
+            
         elif pilihan == 'n':
             menuTampil()
             break
@@ -132,28 +133,28 @@ def tampilSemua():
             print("\nPilihan tidak valid. Silakan pilih opsi yang benar.")
 
 def tampilKategori():
-    global nama_barang_terpilih, jumlah_stok_terpilih, kategori_terpilih
+    global nama_barang_terpilih, jumlah_stok_terpilih, kategori_tepilih
 
     while True:
-        kategori = input("\nMasukkan kategori hewan (kucing/anjing): ").lower()  
+        kategori = input("\nMasukkan kategori hewan (kucing/anjing): ").lower()
         if kategori not in ["kucing", "anjing"]:
             print("\nMohon maaf. Kami hanya menjual barang untuk 'Kucing' dan 'Anjing'.")
             continue
-
+        
         kategori_terpilih = kategori
 
-        print("\nDaftar Barang di Petshop untuk Kategori", kategori_terpilih, ":")
+        print("\nDaftar Barang di Petshop untuk Kategori", kategori, ":")
         header = "{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<10}".format("ID", "Nama Barang", "Kategori Hewan", "Merk", "Harga", "Diskon", "Stok")
         print("\n" + header)
-        print("-" * len(header)) 
-        
+        print("-" * len(header))
+
         for id_barang, barang in data_barang.items():
-            if barang["kategoriHewan"] == kategori_terpilih:
+            if barang["kategoriHewan"] == kategori:
                 row = "{:<10} {:<15} {:<15} {:<15} Rp.{:<12} {:<15} {:<10}".format(id_barang, barang["namaBarang"], barang["kategoriHewan"], barang["merk"], barang["harga"], str(barang["diskon"])+'%', barang["stok"])
                 print(row)
-                
+
         print("-" * len(header))
-        
+
         pilihan = input("\nIngin membeli sesuatu? (Y/N) : ").lower()
 
         if pilihan == "y":
@@ -178,12 +179,11 @@ def tampilKategori():
                                 print(f"\nAnda telah memilih {beli} ({jumlah_stok_terpilih} pcs).")
                                 print('\nTerimakasih telah berbelanja di toko kami!')
                                 time.sleep(0.5)
-                                break
+                                
+                                checkout()
+                                return
                         except ValueError:
                             print("\nMohon Maaf. Masukkan jumlah stok dalam angka.")
-                    
-                    checkout()
-                    break
                 else:
                     print(f"\nBarang '{beli}' tidak tersedia di kategori {kategori_terpilih}.")
             else:
@@ -196,7 +196,7 @@ def tampilKategori():
             print("\nPilihan tidak valid. Silakan pilih opsi yang benar.")
 
 def tampilUrut():
-    global nama_barang_terpilih, jumlah_stok_terpilih 
+    global nama_barang_terpilih, jumlah_stok_terpilih
 
     while True:
         print("\nTampilkan Barang di Petshop:")
@@ -205,24 +205,24 @@ def tampilUrut():
         print("\n[3]. Kembali")
 
         pilihan = input("\nPilih opsi (1/2/3): ")
-        
+
         if pilihan == "1":
             sorted_barang = sorted(data_barang.items(), key=lambda x: x[1]["harga"])
             print("\nDaftar Barang di Petshop:")
             header = "{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<10}".format("ID", "Nama Barang", "Kategori Hewan", "Merk", "Harga", "Diskon", "Stok")
             print("\n" + header)
-            print("-" * len(header)) 
+            print("-" * len(header))
             for id_barang, barang in sorted_barang:
                 row = "{:<10} {:<15} {:<15} {:<15} Rp.{:<12} {:<15} {:<10}".format(id_barang, barang["namaBarang"], barang["kategoriHewan"], barang["merk"], barang["harga"], str(barang["diskon"])+'%', barang["stok"])
                 print(row)
 
             print("-" * len(header))
-            
+
             pilihanbeli1 = input("\nIngin membeli sesuatu? (Y/N) : ").lower()
 
             if pilihanbeli1 == "y":
                 beli = input('\nMasukkan Nama Barang : ')
-                id_barang_terpilih = None 
+                id_barang_terpilih = None
 
                 for id_barang, barang in data_barang.items():
                     if barang["namaBarang"] == beli:
@@ -242,11 +242,11 @@ def tampilUrut():
                                 print(f"\nAnda telah memilih {nama_barang_terpilih} ({jumlah_stok_terpilih} pcs).")
                                 print('\nTerimakasih telah berbelanja di toko kami!')
                                 time.sleep(0.5)
-                                break
+                                
+                                checkout()
+                                return
                         except ValueError:
                             print("\nMohon Maaf. Masukkan jumlah stok dalam angka.")
-                    checkout()
-                    break
                 else:
                     print(f"\nMohon Maaf. Nama barang '{beli}' tidak ditemukan.")
 
@@ -256,24 +256,24 @@ def tampilUrut():
                 break
             else:
                 print("\nPilihan tidak valid. Silakan pilih opsi yang benar.")
-                
+
         elif pilihan == "2":
             sorted_barang = sorted(data_barang.items(), key=lambda x: x[1]["harga"], reverse=True)
             print("\nDaftar Barang di Petshop:")
             header = "{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<10}".format("ID", "Nama Barang", "Kategori Hewan", "Merk", "Harga", "Diskon", "Stok")
             print("\n" + header)
-            print("-" * len(header)) 
+            print("-" * len(header))
             for id_barang, barang in sorted_barang:
                 row = "{:<10} {:<15} {:<15} {:<15} Rp.{:<12} {:<15} {:<10}".format(id_barang, barang["namaBarang"], barang["kategoriHewan"], barang["merk"], barang["harga"], str(barang["diskon"])+'%', barang["stok"])
                 print(row)
 
             print("-" * len(header))
-            
+
             pilihanBeli2 = input("\nIngin membeli sesuatu? (Y/N) : ").lower()
 
             if pilihanBeli2 == "y":
                 beli = input('\nMasukkan Nama Barang : ')
-                id_barang_terpilih = None 
+                id_barang_terpilih = None
 
                 for id_barang, barang in data_barang.items():
                     if barang["namaBarang"] == beli:
@@ -293,16 +293,15 @@ def tampilUrut():
                                 print(f"\nAnda telah memilih {nama_barang_terpilih} ({jumlah_stok_terpilih} pcs).")
                                 print('\nTerimakasih telah berbelanja di toko kami!')
                                 time.sleep(0.5)
-                                break
+                                
+                                
+                                checkout()
+                                return
                         except ValueError:
                             print("\nMohon Maaf. Masukkan jumlah stok dalam angka.")
-                            
-                    checkout()
-                    break
                 else:
                     print(f"\nMohon Maaf. Nama barang '{beli}' tidak ditemukan.")
 
-                
             elif pilihanBeli2 == 'n':
                 menuTampil()
                 break
@@ -322,16 +321,16 @@ def cari():
             print("\nDetail Barang:")
             header = "{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<10}".format("ID", "Nama Barang", "Kategori Hewan", "Merk", "Harga", "Diskon", "Stok")
             print("\n" + header)
-            print("-" * len(header)) 
+            print("-" * len(header))
             for id_barang, barang in data_barang.items():
                 if barang["namaBarang"] == nama_barang_cari:
                     row = "{:<10} {:<15} {:<15} {:<15} Rp.{:<12} {:<15} {:<10}".format(id_barang, barang["namaBarang"], barang["kategoriHewan"], barang["merk"], barang["harga"], str(barang["diskon"])+'%', barang["stok"])
                     print(row)
-                    
+
                     pilihan = input(f"\nIngin membeli {nama_barang_cari}? (Y/N) : ").lower()
-                    
+
                     if pilihan == "y":
-                        global nama_barang_terpilih, jumlah_stok_terpilih 
+                        global nama_barang_terpilih, jumlah_stok_terpilih
                         nama_barang_terpilih = barang["namaBarang"]
                         while True:
                             try:
@@ -344,32 +343,25 @@ def cari():
                                     print(f"\nAnda telah memilih {nama_barang_terpilih} ({jumlah_stok_terpilih} pcs).")
                                     print('\nTerimakasih telah berbelanja di toko kami!')
                                     time.sleep(0.5)
-                                    break
+                                    
+                                    checkout()
+                                    return
                             except ValueError:
                                 print("\nMohon Maaf. Masukkan jumlah stok dalam angka.")
-                    
-                        checkout()
-                        return
+
                     elif pilihan == "n":
                         menuTampil()
-                        return 
+                        return
                     else:
                         print("\nPilihan tidak valid. Silakan pilih opsi yang benar.")
                     break
         else:
             print(f"\nBarang dengan nama '{nama_barang_cari}' tidak tersedia.")
-        
+
         kembali = input("\nCari barang yang lain? (Y/N) : ").lower()
-        
-        if kembali == "y":
-            cari()
-            return
-        elif kembali == 'n':
+        if kembali != "y":
             menuTampil()
             return
-        else:
-            print('\nPilihan tidak valid. Silakan pilih opsi yang benar.')
-
 
 def checkout():
     global nama_barang_terpilih, jumlah_stok_terpilih
@@ -399,9 +391,9 @@ def checkout():
                 del data_barang[id_barang]
 
             input("\nTekan Enter untuk kembali ke menu pelanggan...")
-            
+
             nama_barang_terpilih = 0
-            
+
             pelanggan()
 
             return
@@ -418,7 +410,7 @@ def tampilAdmin():
         print("\n{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<10}".format("ID", "Nama Barang", "Kategori Hewan", "Merk", "Harga", "Diskon", "Stok"))
         for id_barang, barang in data_barang.items():
             print("{:<10} {:<15} {:<15} {:<15} Rp.{:<12} {:<15} {:<10}".format(id_barang, barang["namaBarang"], barang["kategoriHewan"], barang["merk"], barang["harga"], barang["diskon"], barang["stok"]))
-
+        
         pilihan = input("\nTambahkan Barang (Y/N) : ")
         pilihan = pilihan.lower()
 
@@ -435,16 +427,16 @@ def tambahItem():
     while True:
         print("\nTambah Item")
         nama_barang = input("\nMasukkan nama barang: ")
-        
+
         if any(item['namaBarang'] == nama_barang for item in data_barang.values()):
             print(f"\nData dengan nama barang '{nama_barang}' sudah ada.")
             continue
-        
+
         kategori_hewan = input("Masukkan kategori hewan (Masukkan Anjing/Kucing): ")
         if kategori_hewan in ['kucing','anjing']:
-            
+
             merk = input("Masukkan merk: ")
-            
+
             while True:
                 harga_input = input("Masukkan harga: ")
                 if harga_input.isdigit():
@@ -452,7 +444,7 @@ def tambahItem():
                     break
                 else:
                     print("Harga harus berupa angka.")
-                    
+
             while True:
                 diskon_input = input("Masukkan diskon: ")
                 if diskon_input.isdigit():
@@ -460,7 +452,7 @@ def tambahItem():
                     break
                 else:
                     print("Diskon harus berupa angka.")
-                    
+
             while True:
                 stok_input = input("Masukkan stok: ")
                 if stok_input.isdigit():
@@ -482,7 +474,7 @@ def tambahItem():
         new_number = max_number + 1
         kode_barang = f"{tipe_index}{new_number:04d}"
 
-        
+
         item_baru = {
             "namaBarang": nama_barang,
             "kategoriHewan": kategori_hewan,
@@ -505,14 +497,14 @@ def editItem():
         print("\n{:<10} {:<15} {:<15} {:<15} {:<15} {:<15} {:<10}".format("ID", "Nama Barang", "Kategori Hewan", "Merk", "Harga", "Diskon", "Stok"))
         for id_barang, barang in data_barang.items():
             print("{:<10} {:<15} {:<15} {:<15} Rp.{:<12} {:<15} {:<10}".format(id_barang, barang["namaBarang"], barang["kategoriHewan"], barang["merk"], barang["harga"], barang["diskon"], barang["stok"]))
-    
+
         print('\n[1]. Masukkan Kode Barang')
         print("\n[2]. Kembali")
-        
+
         pilihan = input("\nPilih opsi (1/2): ")
         if pilihan == "1":
             kode_barang_ubah = input("\nMasukkan kode barang yang ingin diubah: ").upper()
-            
+
             if kode_barang_ubah in data_barang:
                 print("\nData Barang yang akan diubah:")
                 print("Kode Barang:", kode_barang_ubah)
@@ -529,7 +521,7 @@ def editItem():
                     kategori_hewan = "anjing"
                 else:
                     kategori_hewan = "Kategori Tidak Diketahui"
-                
+
                 print("\nMasukkan informasi baru (kosongkan jika tidak ingin mengubah):")
                 nama_barang_baru = input("Nama Barang Baru: ")
                 merk_baru = input("Merk Baru: ")
@@ -554,7 +546,7 @@ def editItem():
                         break
                     else:
                         print("Stok harus berupa angka.")
-                        
+
                 konfirmasi = input(f"Apakah Anda yakin ingin mengubah barang dengan kode {kode_barang_ubah}? (Y/N): ")
                 if konfirmasi.lower() == 'y':
                     if nama_barang_baru:
@@ -569,7 +561,7 @@ def editItem():
                         data_barang[kode_barang_ubah]["diskon"] = int(diskon_baru)
                     if stok_input_baru:
                         data_barang[kode_barang_ubah]["stok"] = int(stok_baru)
-                
+
                     print("\nData Barang berhasil diubah.")
                     admin()
                     return
@@ -577,7 +569,7 @@ def editItem():
                     print("\nPengubahan dibatalkan.")
                 else:
                     print("\nPilihan tidak valid. Silakan pilih opsi yang benar.")
-                                
+
             else:
                 print("Kode barang tidak ditemukan. Silakan coba lagi.")
         elif pilihan == "2":
@@ -591,7 +583,7 @@ def hapus():
         print("\n[1]. Hapus Berdasarkan ID ")
         print("\n[2]. Hapus Berdasarkan Kategori Hewan ")
         print('\n[3]. Kembali ')
-        
+
         pilihan = input("\nPilih opsi (1/2/3): ")
 
         if pilihan == "1":
@@ -605,29 +597,29 @@ def hapus():
             break
         else:
             print("\nPilihan tidak valid. Silakan pilih opsi yang benar.")
-            
+
 def hapusKategori():
     while True:
         global nama_barang_terpilih
         global jumlah_stok_terpilih
-        
+
         kategori_yang_dihapus = input("\nMasukkan kategori hewan yang ingin dihapus: ").lower()
-        
+
         item_dihapus = []
-        
+
         for kode_barang, barang in data_barang.items():
             if barang["kategoriHewan"].lower() == kategori_yang_dihapus:
                 item_dihapus.append(kode_barang)
-        
+
         if kategori_yang_dihapus in ['kucing','anjing']:
             konfirmasi = input(f"\nApakah Anda yakin ingin menghapus barang dengan kategori {kategori_yang_dihapus}? (Y/N): ")
             if konfirmasi.lower() == 'y':
                 for kode_barang in item_dihapus:
                     nama_barang_terpilih = data_barang[kode_barang]["namaBarang"]
                     jumlah_stok_terpilih = data_barang[kode_barang]["stok"]
-                    
+
                     del data_barang[kode_barang]
-                    
+
                     print(f"Item {nama_barang_terpilih} ({jumlah_stok_terpilih} stok) dengan kategori {kategori_yang_dihapus} telah dihapus.")
             elif konfirmasi.lower() == 'n':
                 print("\nPenghapusan dibatalkan.")
@@ -636,10 +628,10 @@ def hapusKategori():
         else:
             print('\nMohon Masukkan Kategori Kucing / Anjing')
             hapusKategori()
-            
+
         admin()
         return
-        
+
 def hapusIndexItem():
     while True :
         print("\nDaftar Barang di Petshop:")
@@ -649,12 +641,12 @@ def hapusIndexItem():
 
         print('\n[1]. Masukkan Kode Barang')
         print("\n[2]. Kembali")
-        
+
         pilihan = input("\nPilih opsi (1/2): ")
 
         if pilihan == "1":
             kode_barang_hapus = input("\nMasukkan kode barang yang ingin dihapus: ").upper()
-            
+
             if kode_barang_hapus in data_barang:
                 print("\nInformasi barang yang akan dihapus:")
                 print("Kode Barang:", kode_barang_hapus)
@@ -664,7 +656,7 @@ def hapusIndexItem():
                 print("Harga:", data_barang[kode_barang_hapus]["harga"])
                 print("Diskon:", data_barang[kode_barang_hapus]["diskon"])
                 print("Stok:", data_barang[kode_barang_hapus]["stok"])
-                
+
                 konfirmasi = input(f"\nApakah Anda yakin ingin menghapus barang dengan kode {kode_barang_hapus}? (Y/N): ")
                 if konfirmasi.lower() == 'y':
                     del data_barang[kode_barang_hapus]
@@ -711,7 +703,7 @@ def admin():
             break
         else:
             print("Pilihan tidak valid. Silakan pilih opsi yang benar.")
-        
+
 
 def adminLogin():
     while True:
@@ -726,7 +718,7 @@ def adminLogin():
         if pilihan == "1":
             username = input('\nMasukkan Username (Case-Sensitive): ')
 
-            if username in daftarAdmin: 
+            if username in daftarAdmin:
                 admin()
                 break
             else:
