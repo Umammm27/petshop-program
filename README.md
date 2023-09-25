@@ -69,5 +69,3 @@ Follow the on-screen instructions to perform various inventory management tasks,
 Contributions to this project are highly appreciated. If you wish to contribute, please create a pull request, and we will review it.
 
 ---
-
-We hope this README helps you build a professional portfolio for your Yellow Pages project. Be sure to include user instructions, a license, and contribution guidelines as needed for your project.
